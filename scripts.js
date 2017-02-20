@@ -5,7 +5,7 @@ function IdeaObj(id,ideaTitle,ideaBody) {
   this.quality = ' swill'
 }
 
-function newIdea(parsedOut) {
+  function newIdea(parsedOut) {
   $('.idea-card-container').prepend(
   `<div class="idea-card" id="${parsedOut.id}">
     <div class="card-title-box">
@@ -26,8 +26,7 @@ $('.save-button').click(function() {
   var ideaTitle = $('.idea-title').val()
   var ideaBody = $('.idea-body').val()
   var ideaObj = new IdeaObj(id,ideaTitle,ideaBody)
-  var strungOut = JSON.stringify(ideaObj)
-  localStorage.setItem(id, strungOut)
+  localStorage.setItem(id, JSON.stringify(ideaObj))
   $('.idea-title').val("")
   $('.idea-body').val("")
   persistMafk()
@@ -51,7 +50,7 @@ $('.idea-card-container').on('click', '.delete-btn', function() {
 })
 
 $('.idea-card-container').on('click', '.down-vote', function() {
-  var changeQuality = $(this).parents('.idea-card').attr('id')
+  var changeQuality = $(this).parents('.idea-card').attr('id')  
   var changeThisQuality = JSON.parse(
     localStorage.getItem(
       changeQuality)
@@ -86,10 +85,7 @@ $('.idea-card-container').on('click', '.up-vote', function() {
 
 $('.idea-card-container').on('blur', '.card-title', function() {
   var updateTitle = $(this).parents('.idea-card').attr('id')
-  var newTitleValue = JSON.parse(
-    localStorage.getItem(
-      updateTitle)
-    )
+  var newTitleValue = JSON.parse(localStorage.getItem(updateTitle))
   newTitleValue.title = $('.card-title').text()
   localStorage.setItem(
     updateTitle,JSON.stringify(
@@ -112,6 +108,7 @@ $('.idea-card-container').on('blur', '.card-body', function() {
 
 $('.search-text').on('keyup', function(){
   var lookFor = $(this).val().toLowerCase()
+
   $('.idea-card').each(function(index, element){
     var text = $(element).children().text().toLowerCase();
     var match = !!text.match(lookFor);
